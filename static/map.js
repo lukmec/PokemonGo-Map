@@ -317,23 +317,36 @@ function initMap() {
 		mapTypeControlOptions: {
           style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
           position: google.maps.ControlPosition.RIGHT_TOP,
-          mapTypeIds: [
-              'style_pgo',
-              'style_pgo_nl']
+          //mapTypeIds: ['style_pgo','style_pgo_nl']
+          mapTypeIds: [google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.SATELLITE, 'nolabels_style', 'dark_style', 'style_light2', 'style_pgo', 'dark_style_nl', 'style_light2_nl', 'style_pgo_nl']
         },
     });
 	
-	var style_pgo = new google.maps.StyledMapType(pGoStyle, {name: "PokemonGo"});
-	map.mapTypes.set('style_pgo', style_pgo);
+    var style_NoLabels = new google.maps.StyledMapType(noLabelsStyle, { name: "No Labels" });
+    map.mapTypes.set('nolabels_style', style_NoLabels);
 
+    var style_dark = new google.maps.StyledMapType(darkStyle, { name: "Dark" });
+    map.mapTypes.set('dark_style', style_dark);
 
-    var style_pgo_nl = new google.maps.StyledMapType(pGoStyleNoLabels, {name: "PokemonGo (No Labels)"});
+    var style_light2 = new google.maps.StyledMapType(light2Style, { name: "Light2" });
+    map.mapTypes.set('style_light2', style_light2);
+
+    var style_pgo = new google.maps.StyledMapType(pGoStyle, { name: "PokemonGo" });
+    map.mapTypes.set('style_pgo', style_pgo);
+
+    var style_dark_nl = new google.maps.StyledMapType(darkStyleNoLabels, { name: "Dark (No Labels)" });
+    map.mapTypes.set('dark_style_nl', style_dark_nl);
+
+    var style_light2_nl = new google.maps.StyledMapType(light2StyleNoLabels, { name: "Light2 (No Labels)" });
+    map.mapTypes.set('style_light2_nl', style_light2_nl);
+
+    var style_pgo_nl = new google.maps.StyledMapType(pGoStyleNoLabels, { name: "PokemonGo (No Labels)" });
     map.mapTypes.set('style_pgo_nl', style_pgo_nl);
 
-    map.addListener('maptypeid_changed', function(s) {
+    map.addListener('maptypeid_changed', function (s) {
         Store.set('map_style', this.mapTypeId);
     });
-    Store.set('map_style','style_pgo');
+
     map.setMapTypeId(Store.get('map_style'));
     google.maps.event.addListener(map, 'idle', updateMap);
 
